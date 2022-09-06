@@ -21,9 +21,10 @@
                                 <th style="width:15%">Action</th>
                             </thead>
                             <tbody>
+                                @php $no = 1; @endphp
                                 @forelse ($products as $product)
                                     <tr>    
-                                        <td>{{ $product->id }}</td>
+                                        <td>{{ $no }}</td>@php $no++ @endphp
                                         <td>{{ $product->sku }}</td>
                                         <td>{{ $product->type }}</td>
                                         <td>{{ $product->name }}</td>
