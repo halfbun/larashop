@@ -31,11 +31,12 @@
                                         <td>{{ $product->status_label() }}</td>
                                         <td>
                                             <a href="{{ url('admin/products/'. $product->id .'/edit') }}" class="btn btn-warning btn-sm">edit</a>
-                                            
+                                        @can('delete_products')
                                             {!! Form::open(['url' => 'admin/products/'. $product->id, 'class' => 'delete', 'style' => 'display:inline-block']) !!}
                                             {!! Form::hidden('_method', 'DELETE') !!}
                                             {!! Form::submit('remove', ['class' => 'btn btn-danger btn-sm']) !!}
                                             {!! Form::close() !!}
+                                        @endcan    
                                         </td>
                                     </tr>
                                 @empty
@@ -47,9 +48,11 @@
                         </table>
                         {{ $products->links() }}
                     </div>
+                    @can('add_products')
                     <div class="card-footer text-right">
                         <a href="{{ url('admin/products/create') }}" class="btn btn-primary">Add New</a>
                     </div>
+                    @endcan
                 </div>
             </div>
         </div>
