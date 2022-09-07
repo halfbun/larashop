@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\RoleController;
+use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\AttributeController;
@@ -38,13 +40,16 @@ Route::get('admin/products/{productID}/add-image', [ProductController::class, 'a
 Route::post('admin/products/images/{productID}', [ProductController::class, 'upload_image'])->middleware('auth')->name('products.upload_image');
 Route::delete('admin/products/images/{imageID}', [ProductController::class, 'remove_image'])->middleware('auth')->name('products.remove_image');
 
-Route::resource('admin/attributes', AttributeController::class);
+Route::resource('admin/attributes', AttributeController::class)->middleware('auth');;
 Route::get('admin/attributes/{attributeID}/options', [AttributeController::class, 'options'])->middleware('auth')->name('attributes.options');
 Route::get('admin/attributes/{attributeID}/add-option', [AttributeController::class, 'add_option'])->middleware('auth')->name('attributes.add_option');
 Route::post('admin/attributes/options/{attributeID}', [AttributeController::class, 'store_option'])->middleware('auth')->name('attributes.store_option');
 Route::delete('admin/attributes/options/{optionID}', [AttributeController::class, 'remove_option'])->middleware('auth')->name('attributes.remove_option');
 Route::get('admin/attributes/options/{optionID}/edit', [AttributeController::class, 'edit_option'])->middleware('auth')->name('attributes.edit_option');
 Route::put('admin/attributes/options/{optionID}', [AttributeController::class, 'update_option'])->middleware('auth')->name('attributes.update_option');
+
+Route::resource('admin/roles', RoleController::class);
+Route::resource('admin/users', UserController::class);
 
 Auth::routes();
 

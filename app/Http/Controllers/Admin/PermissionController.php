@@ -1,12 +1,17 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use App\Models\Permission;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+
+use App\Authorizable;
+use Session;
 
 class PermissionController extends Controller
 {
+    use Authorizable;
     /**
      * Display a listing of the resource.
      *
