@@ -2,9 +2,11 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ProductController as ProductControllerCustomer;
+use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\UserController;
-use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\AttributeController;
 use App\Http\Controllers\Admin\DashboardController;
@@ -20,10 +22,9 @@ use App\Http\Controllers\Admin\DashboardController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
+Route::get('/', [HomeController::class, 'index']);
+Route::get('/products', [ProductControllerCustomer::class, 'index']);
+Route::get('/product/{slug}', [ProductControllerCustomer::class, 'show']);
 // Route::group(
 //     ['namespace' => 'Admin', 'prefix' => 'admin'],
 //     function(){
@@ -31,16 +32,16 @@ Route::get('/', function () {
 //     }
 // );
 
-Route::get('admin/dashboard', [DashboardController::class, 'index'])->middleware('auth');;
-Route::resource('admin/categories', CategoryController::class)->middleware('auth');;
+Route::get('admin/dashboard', [DashboardController::class, 'index'])->middleware('auth');
+Route::resource('admin/categories', CategoryController::class)->middleware('auth');
 
-Route::resource('admin/products', ProductController::class)->middleware('auth');;
+Route::resource('admin/products', ProductController::class)->middleware('auth');
 Route::get('admin/products/{productID}/images', [ProductController::class, 'images'])->middleware('auth')->name('products.images');
 Route::get('admin/products/{productID}/add-image', [ProductController::class, 'add_image'])->middleware('auth')->name('products.add_image');
 Route::post('admin/products/images/{productID}', [ProductController::class, 'upload_image'])->middleware('auth')->name('products.upload_image');
 Route::delete('admin/products/images/{imageID}', [ProductController::class, 'remove_image'])->middleware('auth')->name('products.remove_image');
 
-Route::resource('admin/attributes', AttributeController::class)->middleware('auth');;
+Route::resource('admin/attributes', AttributeController::class)->middleware('auth');
 Route::get('admin/attributes/{attributeID}/options', [AttributeController::class, 'options'])->middleware('auth')->name('attributes.options');
 Route::get('admin/attributes/{attributeID}/add-option', [AttributeController::class, 'add_option'])->middleware('auth')->name('attributes.add_option');
 Route::post('admin/attributes/options/{attributeID}', [AttributeController::class, 'store_option'])->middleware('auth')->name('attributes.store_option');
@@ -50,6 +51,7 @@ Route::put('admin/attributes/options/{optionID}', [AttributeController::class, '
 
 Route::resource('admin/roles', RoleController::class);
 Route::resource('admin/users', UserController::class);
+
 
 Auth::routes();
 
