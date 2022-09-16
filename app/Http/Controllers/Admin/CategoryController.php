@@ -27,8 +27,8 @@ class CategoryController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        $this->data['categories'] = Category::orderBy('name','ASC')->paginate(10);
+    {   
+        $this->data['categories'] = Category::with('parent')->orderBy('id', 'ASC')->paginate(10);
         return view('admin.categories.index', $this->data);
     }
 
